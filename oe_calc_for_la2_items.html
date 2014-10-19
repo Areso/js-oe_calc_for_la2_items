@@ -1,0 +1,132 @@
+<html>
+<body>
+<div id="content">
+<h1>Расчет цен переточенных оверточенных вещей в Lineage2</h1><!-- <body> --><script>
+ 
+ function Calc()
+ {
+ 
+ var priceitem = Number (document.getElementById('priceitem').value);
+ var priceenchant = Number(document.getElementById('priceenchant').value);
+ var basicchance = Number(document.getElementById('basicchance').value);
+ var safetyenchant = Number(document.getElementById('safetyenchant').value);
+ 
+ var levelenchant = Number (document.getElementById('levelenchant').value);
+ var sum = 0;
+ var sumpriceitem = 0;
+ 
+ 
+ 
+ if ( levelenchant >= 0 && levelenchant<=20)
+ {
+ if ((basicchance >=1) && (basicchance<=100))
+ {
+ if (levelenchant > safetyenchant)
+ {
+ sumpriceitem=priceitem;
+ for (i=1; i <= Number(levelenchant)-Number(safetyenchant) ; i++)
+ {
+ k = Math.pow(( ( basicchance) / 100), i);
+ 
+
+
+ <!-- sum = Number(sum)+( 1 - k )*priceitem; -->
+ sum = Number(sum)+ (1-basicchance /100) * sumpriceitem;
+ sumpriceitem = priceitem + priceenchant * levelenchant + sum;
+ }
+ }
+
+ 
+// sumpriceitem = priceitem + priceenchant * levelenchant + sum;
+ document.getElementById('summary').value = (1 * Number( sumpriceitem.toFixed(5)));
+ 
+ }
+ else
+ {
+ alert("Chance of successful enchant incorrect.\n Please, re-enter chance of enchant from 1 to 100");
+ }
+ }
+ else
+ {
+ alert("Level of enchant incorrect.\n Please, re-enter level of enchant from 0 to 20");
+ }
+ }
+
+function reset()
+{
+ 
+ document.getElementById('priceitem').value = "";
+ document.getElementById('priceenchant').value = "";
+ document.getElementById('basicchance').value = "";
+ document.getElementById('safetyenchant').value = "";
+ document.getElementById('levelenchant').value = "";
+ 
+}
+
+function res(input)
+{
+ input.value = ""; 
+}
+
+
+function numb(input) 
+{
+ var value = input.value;
+ var re = /[^0-9\-\.]/gi;
+ if (re.test(value)) {
+ value = value.replace(re, '');
+ input.value = value;
+ }
+
+}
+</script>
+
+<span style="font-size:16pt">Расчет стоимости переточенных (оверточенных) вещей в Lineage2 (LA2 / ЛА2)</span><br>
+
+<table border="0" alignment="center" width="640">
+<tr>
+<td width="50%">Начальная цена неточенной вещи</td>
+<td width="40%"><input type='text' id="priceitem" value="100" onkeyup="numb(this);" onclick = "res(this)"></td>
+<td width="10%">КК</td>
+</tr>
+<tr>
+<td width="50%">Цена свитка улучшения</td>
+<td width="40%"><input type='text' id="priceenchant" value="5" onkeyup="numb(this);" onclick = "res(this)"></td>
+<td width="10%">КК</td>
+</tr>
+<tr>
+<td width="50%">Базовый шанс успешной заточки</td>
+<td width="40%"><input type='text' id="basicchance" value="70" onkeyup="numb(this);" onclick = "res(this)"></td>
+<td width="10%">%</td>
+</tr>
+<tr>
+<td width="50%">Уровень безопасной точки</td>
+<td width="40%"><input type='text' id="safetyenchant" value="3" onkeyup="numb(this);" onclick = "res(this)"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="50%">Уровень заточки вещи</td>
+<td width="40%"><input type='text' id="levelenchant" value="4" onkeyup="numb(this);" onclick = "res(this)"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="50%">Итоговая цена</td>
+<td width="40%"><input type='text' readonly id="summary"></td>
+<td width="10%">КК</td>
+</tr>
+<tr>
+<td width="50%"></td>
+<td width="40%"></td>
+<td width="10%"></td>
+</tr>
+<tr>
+<td width="30%"> </td>
+<td width="40%"> <button onclick="Calc()">Рассчитать цену!</button></td>
+<td width="30%"><button onclick="reset()">Очистить поля</button></td>
+</tr>
+
+</table> 
+<br><!-- </body> -->
+</div>
+</body>
+</html>
