@@ -1,83 +1,64 @@
 <html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Lineage2 Price calc for overenchanted items</title>
+	</head>
 <body>
 <div id="content">
-<h1>Price calculator for overenchanted Lineage 2 items</h1><!-- <body> --><script>
- 
- function Calc()
- {
- 
- var priceitem = Number (document.getElementById('priceitem').value);
- var priceenchant = Number(document.getElementById('priceenchant').value);
- var basicchance = Number(document.getElementById('basicchance').value);
- var safetyenchant = Number(document.getElementById('safetyenchant').value);
- 
- var levelenchant = Number (document.getElementById('levelenchant').value);
- var sum = 0;
- var sumpriceitem = 0;
- 
- 
- 
- if ( levelenchant >= 0 && levelenchant<=20)
- {
- if ((basicchance >=1) && (basicchance<=100))
- {
- if (levelenchant > safetyenchant)
- {
- sumpriceitem=priceitem;
- for (i=1; i <= Number(levelenchant)-Number(safetyenchant) ; i++)
- {
- k = Math.pow(( ( basicchance) / 100), i);
- 
+<h1>Price calculator for overenchanted Lineage 2 items</h1><!-- <body> -->
+<script>
+function Calc(){
+	var priceitem = Number (document.getElementById('priceitem').value);
+	var priceenchant = Number(document.getElementById('priceenchant').value);
+	var basicchance = Number(document.getElementById('basicchance').value);
+	var safetyenchant = Number(document.getElementById('safetyenchant').value);
 
+	var levelenchant = Number (document.getElementById('levelenchant').value);
+	var sum = 0;
+	var sumpriceitem = 0;
 
- <!-- sum = Number(sum)+( 1 - k )*priceitem; -->
- sum = Number(sum)+ (1-basicchance /100) * sumpriceitem;
- sumpriceitem = priceitem + priceenchant * levelenchant + sum;
- }
- }
-
- 
-// sumpriceitem = priceitem + priceenchant * levelenchant + sum;
- document.getElementById('summary').value = (1 * Number( sumpriceitem.toFixed(5)));
- 
- }
- else
- {
- alert("Chance of successful enchant incorrect.\n Please, re-enter chance of enchant from 1 to 100");
- }
- }
- else
- {
- alert("Level of enchant incorrect.\n Please, re-enter level of enchant from 0 to 20");
- }
- }
-
-function reset()
-{
- 
- document.getElementById('priceitem').value = "";
- document.getElementById('priceenchant').value = "";
- document.getElementById('basicchance').value = "";
- document.getElementById('safetyenchant').value = "";
- document.getElementById('levelenchant').value = "";
- 
+	if ( levelenchant >= 0 && levelenchant<=20)	{
+		if ((basicchance >=1) && (basicchance<=100)){
+			if (levelenchant > safetyenchant){
+			sumpriceitem=priceitem+priceenchant*3;
+			for (i=1; i <= Number(levelenchant)-Number(safetyenchant) ; i++){
+				k = Math.pow(( ( basicchance) / 100), i);
+				//<!-- sum = Number(sum)+( 1 - k )*priceitem; -->
+				sum = Number(sum)+ (1-basicchance /100) * sumpriceitem;
+				sumpriceitem = priceitem + priceenchant * (3+i) + sum;
+				}
+			}
+			// sumpriceitem = priceitem + priceenchant * levelenchant + sum;
+			document.getElementById('summary').value = (1 * Number( sumpriceitem.toFixed(2)));
+		}
+		else{
+			alert("Chance of successful enchant incorrect.\n Please, re-enter chance of enchant from 1 to 100");
+		}
+	}
+	else{
+		alert("Level of enchant incorrect.\n Please, re-enter level of enchant from 0 to 20");
+	}
 }
 
-function res(input)
-{
- input.value = ""; 
+function reset(){
+	document.getElementById('priceitem').value = "";
+	document.getElementById('priceenchant').value = "";
+	document.getElementById('basicchance').value = "";
+	document.getElementById('safetyenchant').value = "";
+	document.getElementById('levelenchant').value = "";
 }
 
+function res(input){
+	input.value = ""; 
+}
 
-function numb(input) 
-{
- var value = input.value;
- var re = /[^0-9\-\.]/gi;
- if (re.test(value)) {
- value = value.replace(re, '');
- input.value = value;
- }
-
+function numb(input){
+	var value = input.value;
+	var re = /[^0-9\-\.]/gi;
+	if (re.test(value)) {
+		value = value.replace(re, '');
+		input.value = value;
+	}
 }
 </script>
 
@@ -87,12 +68,12 @@ function numb(input)
 <tr>
 <td width="50%">Non-enchanted item's price</td>
 <td width="40%"><input type='text' id="priceitem" value="100" onkeyup="numb(this);" onclick = "res(this)"></td>
-<td width="10%">KK</td>
+<td width="10%">kk</td>
 </tr>
 <tr>
 <td width="50%">Enchant scroll's price</td>
 <td width="40%"><input type='text' id="priceenchant" value="5" onkeyup="numb(this);" onclick = "res(this)"></td>
-<td width="10%">KK</td>
+<td width="10%">kk</td>
 </tr>
 <tr>
 <td width="50%">Chance for successful enchant</td>
@@ -112,7 +93,7 @@ function numb(input)
 <tr>
 <td width="50%">Enchanted item's price</td>
 <td width="40%"><input type='text' readonly id="summary"></td>
-<td width="10%">KK</td>
+<td width="10%">kk</td>
 </tr>
 <tr>
 <td width="50%"></td>
@@ -121,8 +102,8 @@ function numb(input)
 </tr>
 <tr>
 <td width="30%"> </td>
-<td width="40%"> <button onclick="Calc()">Рассчитать цену!</button></td>
-<td width="30%"><button onclick="reset()">Очистить поля</button></td>
+<td width="40%"> <button onclick="Calc()">Calc!</button></td>
+<td width="30%"><button onclick="reset()">Clear input</button></td>
 </tr>
 
 </table> 
